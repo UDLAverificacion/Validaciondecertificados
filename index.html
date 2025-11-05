@@ -13,30 +13,25 @@
     <link media="screen, projection" rel="stylesheet" href="https://static.mineduc.cl/css/mineduc-theme/jquery-ui-1.10.3.custom.css" type="text/css">
     
     <style>
-        /* Definimos la caja gris del captcha */
+        /* Estilos para tu formulario */
         .captcha-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
             margin-top: 20px;
         }
-
         .captcha-box {
             padding: 30px;
-            background: #f9f9f9; /* Color gris claro */
+            background: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.05);
-            width: 100%; /* La caja ocupará el ancho del contenedor */
+            width: 100%;
         }
-        
-        /* El contenedor que limita el ancho total */
         .container_mid {
             width: 800px;
-            margin: 0 auto; /* Centramos el contenedor */
+            margin: 0 auto;
         }
-
-        /* Estilos para nuestro formulario DENTRO de la caja */
         .captcha-box label {
             display: block;
             font-weight: bold;
@@ -56,7 +51,7 @@
         .captcha-box button {
             width: 100%;
             padding: 12px;
-            background-color: #0d6efd; /* Botón azul (estilo Mineduc) */
+            background-color: #0d6efd;
             color: white;
             border: none;
             border-radius: 5px;
@@ -75,7 +70,7 @@
             font-size: 1.1em;
             padding: 15px;
             border-radius: 5px;
-            display: none; /* Oculto hasta que haya un resultado */
+            display: none; /* Oculto por defecto */
         }
         .exito {
             display: block !important;
@@ -136,7 +131,8 @@
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
+        
         <div id="footer">
             <div id="container">
                 <div id="bottommenu">
@@ -152,20 +148,73 @@
     </div>
 
     <script>
-        function verificarCodigo() {
-            // -----------------------------------------------------------------
-            // PASO IMPORTANTE:
-            // Cambia "TU-CODIGO-SECRETO" por el código real de tu certificado.
-            const codigoValido = "ns1234";
-            // -----------------------------------------------------------------
+    
+        // --- INICIO DE TU BASE DE DATOS ---
+        // Aquí pones todos tus certificados válidos.
+        // Agrega todos los que necesites.
+        const misCertificados = [
+            {
+                folio: "NS1234",
+                nombre: "Juan Alberto Pérez González",
+                curso: "Curso de HTML Básico",
+                fecha: "2024-01-15"
+            },
+            {
+                folio: "CERT-999",
+                nombre: "María Isabel López Silva",
+                curso: "Curso de JavaScript Avanzado",
+                fecha: "2024-02-20"
+            },
+            {
+                folio: "ABC-789",
+                nombre: "Pedro Morales Araya",
+                curso: "Gestión de Proyectos",
+                fecha: "2024-03-10"
+            }
+            // Para agregar uno nuevo, copia y pega un bloque:
+            // ,
+            // {
+            //   folio: "OTRO-FOLIO",
+            //   nombre: "Otro Nombre Apellido",
+            //   curso: "Otro Curso",
+            //   fecha: "2024-04-01"
+            // }
+        ];
+        // --- FIN DE TU BASE DE DATOS ---
 
+
+        // Esta es la función que se llama al presionar el botón
+        function verificarCodigo() {
             let inputUsuario = document.getElementById("codigoInput").value;
             let mensajeDiv = document.getElementById("resultado");
 
-            if (inputUsuario.trim().toUpperCase() === codigoValido.toUpperCase()) {
-                mensajeDiv.innerHTML = "<strong>¡Certificado Válido!</strong><br/>El certificado es auténtico.";
+            // Limpiamos espacios y convertimos a mayúsculas para comparar
+            let folioBuscado = inputUsuario.trim().toUpperCase();
+
+            // 1. Revisar si el campo está vacío
+            if (folioBuscado === "") {
+                mensajeDiv.innerHTML = "<strong>Código no válido.</strong><br/>Por favor, ingrese un folio.";
+                mensajeDiv.className = "error";
+                return; // Detiene la función
+            }
+
+            // 2. Buscar el folio en la lista 'misCertificados'
+            let certificadoEncontrado = misCertificados.find(
+                (certificado) => certificado.folio.toUpperCase() === folioBuscado
+            );
+
+            // 3. Mostrar el resultado
+            if (certificadoEncontrado) {
+                // Si se encuentra
+                mensajeDiv.innerHTML = `
+                    <strong>¡Certificado Válido!</strong><br/>
+                    <strong>Nombre:</strong> ${certificadoEncontrado.nombre}<br/>
+                    <strong>Curso:</strong> ${certificadoEncontrado.curso}<br/>
+                    <strong>Fecha:</strong> ${certificadoEncontrado.fecha}
+                `;
                 mensajeDiv.className = "exito";
             } else {
+                // Si no se encuentra
                 mensajeDiv.innerHTML = "<strong>Código no válido.</strong><br/>El código ingresado no se encontró o no es correcto.";
                 mensajeDiv.className = "error";
             }
@@ -173,4 +222,3 @@
     </script>
 </body>
 </html>
-
