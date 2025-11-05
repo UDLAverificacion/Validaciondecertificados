@@ -183,7 +183,20 @@
             .captcha-box {
                 padding: 15px;
             }
-            
+                /* AJUSTE CLAVE: Reducir ancho de campos y botón */
+    .captcha-box input[type="text"], 
+    .captcha-box button {
+        width: 90% !important; /* Reduce el ancho al 90% */
+        margin-left: auto !important; /* Centra el elemento */
+        margin-right: auto !important; /* Centra el elemento */
+        display: block !important;
+    }
+    
+    /* Centrar también la caja de reCAPTCHA */
+    .g-recaptcha { 
+        margin: 10px auto !important;
+    }
+
             /* Ajusta el ancho y margen de los elementos Mineduc si no responden */
             .content, .tab_content, .wrapper {
                 padding: 0 !important;
@@ -393,6 +406,7 @@
     </script>
 </body>
 </html>
+
 
 
 
