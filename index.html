@@ -8,29 +8,44 @@
 
     <link href="https://static.mineduc.cl/img/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link media="screen, projection" href="https://static.mineduc.cl/css/style.css" type="text/css" rel="stylesheet">
-    
     <link type="text/css" href="https://certificados.mineduc.cl/certificados-web/locals/css/font-fix.css" rel="stylesheet" media="screen, projection">
     <link type="text/css" href="https://certificados.mineduc.cl/certificados-web/locals/css/override.css" rel="stylesheet" media="screen, projection">
     <link media="screen, projection" rel="stylesheet" href="https://static.mineduc.cl/css/mineduc-theme/jquery-ui-1.10.3.custom.css" type="text/css">
     
     <style>
-        /* Estilos para nuestro formulario y mensajes */
-        .nuestro-formulario {
-            width: 80%;
-            margin: 20px auto;
-            padding: 20px;
+        /* Definimos la caja gris del captcha */
+        .captcha-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .captcha-box {
+            padding: 30px;
+            background: #f9f9f9; /* Color gris claro */
             border: 1px solid #ddd;
             border-radius: 8px;
-            background-color: #fafafa;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            width: 100%; /* La caja ocupará el ancho del contenedor */
         }
-        .nuestro-formulario label {
+        
+        /* El contenedor que limita el ancho total */
+        .container_mid {
+            width: 800px;
+            margin: 0 auto; /* Centramos el contenedor */
+        }
+
+        /* Estilos para nuestro formulario DENTRO de la caja */
+        .captcha-box label {
             display: block;
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             text-align: left;
             color: #333;
+            font-size: 1.1em;
         }
-        .nuestro-formulario input[type="text"] {
+        .captcha-box input[type="text"] {
             width: 100%;
             padding: 12px;
             margin-bottom: 20px;
@@ -38,21 +53,23 @@
             border-radius: 5px;
             box-sizing: border-box; 
         }
-        .nuestro-formulario button {
+        .captcha-box button {
             width: 100%;
             padding: 12px;
-            background-color: #007bff; /* Azul */
+            background-color: #0d6efd; /* Botón azul (estilo Mineduc) */
             color: white;
             border: none;
             border-radius: 5px;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-        .nuestro-formulario button:hover {
-            background-color: #0056b3;
+        .captcha-box button:hover {
+            background-color: #0b5ed7;
         }
         
+        /* Estilos para los mensajes de resultado */
         #resultado {
             margin-top: 20px;
             font-size: 1.1em;
@@ -82,7 +99,6 @@
             <div id="top">
                 <div class="wrapped">
                     <h1 class="logo med"><a href="#">Portal de Certificados en Línea</a></h1>
-                    <span class="alignleft"></span> <span class="alignright"></span>
                 </div>
             </div>
             <div class="header med">
@@ -106,13 +122,15 @@
                             <p><strong>Estimado Usuario: </strong>Ingrese el folio o código del certificado para validar su autenticidad.</p>
                         </div>
                         
-                        <div class="nuestro-formulario">
-                            <label for="codigoInput">Folio del Certificado:</label>
-                            <input type="text" id="codigoInput" placeholder="Ingrese el código aquí">
-                            
-                            <button type="button" onclick="verificarCodigo()">Validar Certificado</button>
-                            
-                            <div id="resultado"></div>
+                        <div class="container_mid cf captcha-wrapper">
+                            <div class="captcha-box">
+                                <label for="codigoInput">Folio del Certificado:</label>
+                                <input type="text" id="codigoInput" placeholder="Ingrese el código aquí">
+                                
+                                <button type="button" onclick="verificarCodigo()">Validar Certificado</button>
+                                
+                                <div id="resultado"></div>
+                            </div>
                         </div>
 
                     </div>
@@ -123,7 +141,7 @@
             <div id="container">
                 <div id="bottommenu">
                     <div class="block-right">
-                        <span class="footer_plain_text"> Ministerio de Educación - Teléfono +56 2 24066000 - Dirección Av. Libertador Bernardo O'higgins 1371
+                        <span class="footer_plain_text"> Ministerio de Educación - Teléfono +56 2 24066000 - Dirección Av. Libertador Bernardo O'Higgins 1371
                             <br>
                             <a class="btns" href="http://validator.w3.org/check?uri=referer">XHTML 1.0</a> | <a class="btns" href="#">CSS 3.0</a> | <a class="btns">Versión 1.37.0</a> 
                         </span>
@@ -141,22 +159,15 @@
             const codigoValido = "TU-CODIGO-SECRETO";
             // -----------------------------------------------------------------
 
-            // Obtenemos los elementos del HTML
             let inputUsuario = document.getElementById("codigoInput").value;
             let mensajeDiv = document.getElementById("resultado");
 
-            // Comparamos el código del usuario con el código válido
             if (inputUsuario.trim().toUpperCase() === codigoValido.toUpperCase()) {
-                
-                // Si es válido
                 mensajeDiv.innerHTML = "<strong>¡Certificado Válido!</strong><br/>El certificado es auténtico.";
-                mensajeDiv.className = "exito"; // Aplica el estilo verde
-
+                mensajeDiv.className = "exito";
             } else {
-                
-                // Si NO es válido
                 mensajeDiv.innerHTML = "<strong>Código no válido.</strong><br/>El código ingresado no se encontró o no es correcto.";
-                mensajeDiv.className = "error"; // Aplica el estilo rojo
+                mensajeDiv.className = "error";
             }
         }
     </script>
