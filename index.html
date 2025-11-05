@@ -64,25 +64,80 @@
             background-color: #0b5ed7;
         }
         
-        /* Estilos para los mensajes de resultado */
-        #resultado {
+        /* Contenedores de Vistas */
+        #formulario-vista {
+            display: block; /* Muestra el formulario por defecto */
+        }
+        #resultado-vista {
+            display: none; /* Oculta el resultado por defecto */
             margin-top: 20px;
-            font-size: 1.1em;
-            padding: 15px;
+        }
+
+        /* Estilos del Recuadro Verde (Éxito) */
+        .msg-exito {
+            padding: 20px;
+            background-color: #e6f7ec; /* Fondo verde claro */
+            border: 1px solid #b7e1c7; /* Borde verde */
+            color: #0f5132; /* Texto verde oscuro */
             border-radius: 5px;
-            display: none; /* Oculto por defecto */
+            margin-bottom: 20px;
+            font-size: 1.1em;
         }
-        .exito {
-            display: block !important;
-            background-color: #e6f7ec;
-            border: 1px solid #b7e1c7;
-            color: #0f5132;
+        .msg-exito p {
+            margin: 5px 0;
         }
+
+        /* Estilos del Recuadro Error */
         .error {
             display: block !important;
             background-color: #f8d7da;
             border: 1px solid #f5c2c7;
             color: #842029;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        /* Estilos del Visor de PDF */
+        #pdf-visor {
+            margin-top: 20px;
+            height: 600px; /* Altura fija para el visor */
+            width: 100%;
+            border: 1px solid #ccc;
+            background-color: #404040; /* Fondo oscuro como en la imagen */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            font-family: sans-serif;
+            font-size: 1.2em;
+        }
+        #pdf-visor a {
+            padding: 10px 30px;
+            background-color: #5bc0de; /* Azul claro para el botón Abrir */
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        .volver-portal-btn {
+            display: block;
+            width: 250px;
+            margin: 20px auto 0 auto;
+            padding: 12px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
         }
     </style>
 </head>
@@ -103,7 +158,7 @@
             </div>
             <div id="navegacion">
                 <div id="breadcrumb" class="cf">
-                    Ud. está en: » <a href="#">Portal de Certificados en Línea&nbsp;</a>»&nbsp;<a href="#">Inicio </a> »<a href="#">&nbsp;Validar Certificado</a>
+                    Ud. está en: » <a href="#">Portal de Certificados en Línea&nbsp;</a>»&nbsp;<a href="#" onclick="mostrarVista('formulario-vista')">Inicio </a> »<a href="#">&nbsp;Validar Certificado</a>
                 </div>
             </div>
             
@@ -113,22 +168,47 @@
                         <br>
                         <h2 style="margin-left: 48px;"><span class="blueNormal">Validación de Certificado</span></h2>
                         
-                        <div class="msg informa rounded-top rounded-bottom gob size_15 line_21">
-                            <p><strong>Estimado Usuario: </strong>Ingrese el folio o código del certificado para validar su autenticidad.</p>
-                        </div>
-                        
-                        <div class="container_mid cf captcha-wrapper">
-                            <div class="captcha-box">
-                                <label for="codigoInput">Folio del Certificado:</label>
-                                <input type="text" id="codigoInput" placeholder="Ingrese el código aquí">
-                                
-                                <button type="button" onclick="verificarCodigo()">Validar Certificado</button>
-                                
-                                <div id="resultado"></div>
+                        <div id="formulario-vista">
+                            <div class="msg informa rounded-top rounded-bottom gob size_15 line_21">
+                                <p><strong>Estimado Usuario: </strong>Ingrese el folio o código del certificado para validar su autenticidad.</p>
+                            </div>
+                            
+                            <div class="container_mid cf captcha-wrapper">
+                                <div class="captcha-box">
+                                    <label for="codigoInput">Folio del Certificado:</label>
+                                    <input type="text" id="codigoInput" placeholder="Ingrese el código aquí">
+                                    
+                                    <button type="button" onclick="verificarCodigo()">Validar Certificado</button>
+                                    
+                                    <div id="resultado-error" style="display: none;"></div>
+                                </div>
                             </div>
                         </div>
 
-                    </div>
+                        <div id="resultado-vista">
+                            <div class="container_mid">
+                                <div class="msg-exito">
+                                    <p>El Ministerio de Educación confirma que el certificado en consulta es un documento **válido y vigente**.</p>
+                                    <p>Ver más información</p>
+                                </div>
+                            </div>
+
+                            <div class="container_mid">
+                                <p style="margin-bottom: 5px; font-weight: bold;">Verifique que el certificado presentado contenga la misma información que el documento que se muestra a continuación.</p>
+                                
+                                <div id="pdf-visor">
+                                    <p>PDF</p>
+                                    <p>getPdf</p>
+                                    <a id="pdf-link" href="#" target="_blank">Abrir</a>
+                                </div>
+
+                                <a href="#" class="volver-portal-btn" onclick="mostrarVista('formulario-vista')">
+                                    <i class="icon-home icon-white"></i> Volver al Portal
+                                </a>
+                            </div>
+
+                        </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -149,76 +229,86 @@
 
     <script>
     
-        // --- INICIO DE TU BASE DE DATOS ---
-        // Aquí pones todos tus certificados válidos.
-        // Agrega todos los que necesites.
+        // --- INICIO DE TU BASE DE DATOS ACTUALIZADA ---
+        // **IMPORTANTE**: Necesitas agregar la URL del PDF real.
         const misCertificados = [
             {
                 folio: "NS1234",
                 nombre: "Juan Alberto Pérez González",
                 curso: "Curso de HTML Básico",
-                fecha: "2024-01-15"
+                fecha: "2024-01-15",
+                // DEBES REEMPLAZAR ESTO con la URL REAL de tu PDF
+                pdf_url: "https://ejemplo.com/pdfs/certificado-juan.pdf" 
             },
             {
                 folio: "CERT-999",
                 nombre: "María Isabel López Silva",
                 curso: "Curso de JavaScript Avanzado",
-                fecha: "2024-02-20"
+                fecha: "2024-02-20",
+                pdf_url: "https://ejemplo.com/pdfs/certificado-maria.pdf" 
             },
             {
                 folio: "ABC-789",
                 nombre: "Pedro Morales Araya",
                 curso: "Gestión de Proyectos",
-                fecha: "2024-03-10"
+                fecha: "2024-03-10",
+                pdf_url: "https://ejemplo.com/pdfs/certificado-pedro.pdf"
             }
-            // Para agregar uno nuevo, copia y pega un bloque:
-            // ,
-            // {
-            //   folio: "OTRO-FOLIO",
-            //   nombre: "Otro Nombre Apellido",
-            //   curso: "Otro Curso",
-            //   fecha: "2024-04-01"
-            // }
         ];
         // --- FIN DE TU BASE DE DATOS ---
 
+        // Función para cambiar entre la vista de formulario y la de resultado
+        function mostrarVista(vistaId) {
+            document.getElementById('formulario-vista').style.display = 'none';
+            document.getElementById('resultado-vista').style.display = 'none';
+            document.getElementById(vistaId).style.display = 'block';
+            document.getElementById('resultado-error').style.display = 'none'; // Limpia errores al cambiar
+        }
 
-        // Esta es la función que se llama al presionar el botón
+        // Función principal de validación
         function verificarCodigo() {
             let inputUsuario = document.getElementById("codigoInput").value;
-            let mensajeDiv = document.getElementById("resultado");
+            let mensajeErrorDiv = document.getElementById("resultado-error");
 
             // Limpiamos espacios y convertimos a mayúsculas para comparar
             let folioBuscado = inputUsuario.trim().toUpperCase();
+            
+            mensajeErrorDiv.style.display = 'none'; // Oculta errores anteriores
 
             // 1. Revisar si el campo está vacío
             if (folioBuscado === "") {
-                mensajeDiv.innerHTML = "<strong>Código no válido.</strong><br/>Por favor, ingrese un folio.";
-                mensajeDiv.className = "error";
+                mensajeErrorDiv.innerHTML = "<strong>Código no válido.</strong><br/>Por favor, ingrese un folio.";
+                mensajeErrorDiv.className = "error";
+                mensajeErrorDiv.style.display = 'block';
                 return; // Detiene la función
             }
 
-            // 2. Buscar el folio en la lista 'misCertificados'
+            // 2. Buscar el folio
             let certificadoEncontrado = misCertificados.find(
                 (certificado) => certificado.folio.toUpperCase() === folioBuscado
             );
 
             // 3. Mostrar el resultado
             if (certificadoEncontrado) {
-                // Si se encuentra
-                mensajeDiv.innerHTML = `
-                    <strong>¡Certificado Válido!</strong><br/>
-                    <strong>Nombre:</strong> ${certificadoEncontrado.nombre}<br/>
-                    <strong>Curso:</strong> ${certificadoEncontrado.curso}<br/>
-                    <strong>Fecha:</strong> ${certificadoEncontrado.fecha}
-                `;
-                mensajeDiv.className = "exito";
+                // Éxito: Configuramos el enlace y cambiamos a la vista de resultado
+                document.getElementById("pdf-link").href = certificadoEncontrado.pdf_url;
+                
+                // Si quieres que el botón Volver al Portal te lleve a otro lado,
+                // cambia la URL en el atributo href del botón 'volver-portal-btn'
+                
+                mostrarVista('resultado-vista');
             } else {
-                // Si no se encuentra
-                mensajeDiv.innerHTML = "<strong>Código no válido.</strong><br/>El código ingresado no se encontró o no es correcto.";
-                mensajeDiv.className = "error";
+                // Error: Mostramos el mensaje de error
+                mensajeErrorDiv.innerHTML = "<strong>Código no válido.</strong><br/>El código ingresado no se encontró o no es correcto.";
+                mensajeErrorDiv.className = "error";
+                mensajeErrorDiv.style.display = 'block';
             }
         }
+
+        // Inicializar la vista al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+             mostrarVista('formulario-vista');
+        });
     </script>
 </body>
 </html>
