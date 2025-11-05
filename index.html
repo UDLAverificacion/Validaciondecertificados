@@ -139,11 +139,25 @@
             text-align: center;
             text-decoration: none;
             transition: background-color 0.3s ease;
-                    transition: background-color 0.3s ease;
-        } /* <--- CIERRA EL BOTÓN ORIGINAL */
-
-        /* --- ADAPTACIÓN RESPONSIVE (MEDIA QUERIES) --- */
+        }
+                /* --- ADAPTACIÓN RESPONSIVE (MEDIA QUERIES) --- */
         @media (max-width: 850px) {
+            
+            /* Sobrescribir los anchos fijos heredados de Mineduc */
+            #page, #top, .header, .title, .wrapped {
+                width: 100% !important;
+                min-width: 100% !important;
+                box-sizing: border-box; 
+            }
+            .logo, .title {
+                text-align: left;
+                padding: 10px;
+            }
+            .header h1 {
+                font-size: 1.2em; 
+                line-height: 1.2;
+            }
+
             /* Redefine el contenedor principal */
             .container_mid {
                 width: 90% !important; 
@@ -169,8 +183,7 @@
             .volver-portal-btn {
                 width: 90%;
             }
-        } /* <--- CIERRA EL BLOQUE @media */
-
+        } /* CIERRA EL BLOQUE @media */
     </style>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
@@ -368,6 +381,7 @@
     </script>
 </body>
 </html>
+
 
 
 
