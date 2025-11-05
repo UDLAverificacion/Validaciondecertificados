@@ -157,6 +157,19 @@
                 font-size: 1.2em; 
                 line-height: 1.2;
             }
+    /* AJUSTE CLAVE: Eliminar márgenes y padding en elementos que empujan el contenido */
+    #navegacion, #breadcrumb, .content {
+        padding-left: 10px !important; 
+        padding-right: 10px !important; 
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* Asegurar que el título 'Validación de Certificado' no tenga margen negativo */
+    h2 {
+        margin-left: 10px !important; 
+        padding-left: 0 !important;
+    }
 
             /* Redefine el contenedor principal */
             .container_mid {
@@ -381,6 +394,7 @@
     </script>
 </body>
 </html>
+
 
 
 
