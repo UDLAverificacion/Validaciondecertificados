@@ -140,6 +140,7 @@
             transition: background-color 0.3s ease;
         }
     </style>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -176,10 +177,13 @@
                             <div class="container_mid cf captcha-wrapper">
                                 <div class="captcha-box">
                                     <label for="codigoInput">Folio del Certificado:</label>
-                                    <input type="text" id="codigoInput" placeholder="Ingrese el código aquí">
+<input type="text" id="codigoInput" placeholder="Ingrese el código aquí">
                                     
-                                    <button type="button" onclick="verificarCodigo()">Validar Certificado</button>
-                                    
+<div class="g-recaptcha" data-sitekey="6LfD0QIsAAAAAETzSL_GyI4nvJ_YIj5hBpjQ_wFh"></div>
+<br/>
+
+<button type="button" onclick="verificarCodigo()">Validar Certificado</button>
+
                                     <div id="resultado-error" style="display: none;"></div>
                                 </div>
                             </div>
@@ -292,6 +296,16 @@
                 mensajeErrorDiv.style.display = 'block';
                 return; // Detiene la función
             }
+            // 2. VERIFICACIÓN RECAPTCHA
+            let recaptchaResponse = grecaptcha.getResponse();
+
+            if (recaptchaResponse.length === 0) {
+                mensajeErrorDiv.innerHTML = "<strong>Error de verificación.</strong><br/>Por favor, complete la casilla 'No soy un robot'.";
+                mensajeErrorDiv.className = "error";
+                mensajeErrorDiv.style.display = 'block';
+                return; // Detiene la función si el reCAPTCHA está vacío
+            }
+            // FIN DE LA VERIFICACIÓN RECAPTCHA
 
             // 2. Buscar el folio
             let certificadoEncontrado = misCertificados.find(
@@ -322,6 +336,7 @@
     </script>
 </body>
 </html>
+
 
 
 
