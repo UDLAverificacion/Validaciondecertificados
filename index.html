@@ -5,6 +5,7 @@
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta http-equiv="X-UA-Compatible" content="IE=9">
     <meta http-equiv="X-UA-Compatible" content="edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://static.mineduc.cl/img/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link media="screen, projection" href="https://static.mineduc.cl/css/style.css" type="text/css" rel="stylesheet">
@@ -138,7 +139,38 @@
             text-align: center;
             text-decoration: none;
             transition: background-color 0.3s ease;
-        }
+                    transition: background-color 0.3s ease;
+        } /* <--- CIERRA EL BOTÓN ORIGINAL */
+
+        /* --- ADAPTACIÓN RESPONSIVE (MEDIA QUERIES) --- */
+        @media (max-width: 850px) {
+            /* Redefine el contenedor principal */
+            .container_mid {
+                width: 90% !important; 
+                padding: 0 10px; 
+            }
+
+            /* Ajusta el contenido del captcha y mensajes */
+            .captcha-wrapper {
+                margin-top: 10px;
+            }
+            .captcha-box {
+                padding: 15px;
+            }
+            
+            /* Ajusta el ancho y margen de los elementos Mineduc si no responden */
+            .content, .tab_content, .wrapper {
+                padding: 0 !important;
+                margin: 0 auto;
+                width: 100% !important;
+            }
+
+            /* Hace el botón de Volver al Portal más pequeño */
+            .volver-portal-btn {
+                width: 90%;
+            }
+        } /* <--- CIERRA EL BLOQUE @media */
+
     </style>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
@@ -336,6 +368,7 @@
     </script>
 </body>
 </html>
+
 
 
 
