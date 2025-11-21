@@ -1,420 +1,299 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="es">
 <head>
-    <title>Portal de Certificados en Línea</title>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-    <meta http-equiv="X-UA-Compatible" content="IE=9">
-    <meta http-equiv="X-UA-Compatible" content="edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="https://static.mineduc.cl/img/favicon.ico" type="image/x-icon" rel="shortcut icon">
-    <link media="screen, projection" href="https://static.mineduc.cl/css/style.css" type="text/css" rel="stylesheet">
-    <link type="text/css" href="https://certificados.mineduc.cl/certificados-web/locals/css/font-fix.css" rel="stylesheet" media="screen, projection">
-    <link type="text/css" href="https://certificados.mineduc.cl/certificados-web/locals/css/override.css" rel="stylesheet" media="screen, projection">
-    <link media="screen, projection" rel="stylesheet" href="https://static.mineduc.cl/css/mineduc-theme/jquery-ui-1.10.3.custom.css" type="text/css">
+    <title>AyudaMineduc - Certificados</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <style>
-        /* Estilos para tu formulario */
-        .captcha-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
+        /* Reset básico */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
-        .captcha-box {
-            padding: 30px;
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
-            width: 100%;
-        }
-        .container_mid {
-            width: 800px;
-            margin: 0 auto;
-        }
-        .captcha-box label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-align: left;
+
+        body {
+            background-color: #fff;
             color: #333;
-            font-size: 1.1em;
-        }
-        .captcha-box input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box; 
-        }
-        .captcha-box button {
-            width: 100%;
-            padding: 12px;
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .captcha-box button:hover {
-            background-color: #0b5ed7;
-        }
-        
-        /* Contenedores de Vistas */
-        #formulario-vista {
-            display: block; /* Muestra el formulario por defecto */
-        }
-        #resultado-vista {
-            display: none; /* Oculta el resultado por defecto */
-            margin-top: 20px;
-        }
-
-        /* Estilos del Recuadro Verde (Éxito) */
-        .msg-exito {
-            padding: 20px;
-            background-color: #e6f7ec; /* Fondo verde claro */
-            border: 1px solid #b7e1c7; /* Borde verde */
-            color: #0f5132; /* Texto verde oscuro */
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-size: 1.1em;
-        }
-        .msg-exito p {
-            margin: 5px 0;
-        }
-
-        /* Estilos del Recuadro Error */
-        .error {
-            display: block !important;
-            background-color: #f8d7da;
-            border: 1px solid #f5c2c7;
-            color: #842029;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-
-        /* Estilos del Visor de PDF */
-        #pdf-visor {
-            margin-top: 20px;
-            height: 600px; /* Altura fija para el visor */
-            width: 100%;
-            border: 1px solid #ccc;
-            background-color: #404040; /* Fondo oscuro como en la imagen */
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
-            color: white;
-            font-family: sans-serif;
-            font-size: 1.2em;
+            min-height: 100vh;
         }
-        #pdf-visor a {
-            padding: 10px 30px;
-            background-color: #5bc0de; /* Azul claro para el botón Abrir */
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 15px;
+
+        /* CABECERA TIPO FOTO */
+        .header-mobile {
+            padding: 15px 20px;
+            background: white;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .azul-claro { color: #0072bc; } /* Azul Ayuda */
+        .rojo-bold { color: #e30613; font-weight: 900; } /* Rojo Mineduc */
+
+        .titulo-principal {
+            font-size: 20px;
+            color: #0072bc;
+            font-weight: normal;
+            margin-bottom: 5px;
+        }
+
+        .subtitulo {
+            font-size: 16px;
+            color: #0072bc;
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+
+        /* CONTENEDOR GRIS (La caja de fondo de la foto) */
+        .contenedor-gris {
+            background-color: #f0f0f0; /* Gris claro de la foto */
+            padding: 20px;
+            border-radius: 8px;
+            margin: 0 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .texto-instruccion {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .texto-instruccion strong {
+            color: #555;
             font-weight: bold;
         }
-        
-        .volver-portal-btn {
-            display: block;
-            width: 250px;
-            margin: 20px auto 0 auto;
-            padding: 12px;
-            background-color: #0d6efd;
+
+        /* TARJETA BLANCA FLOTANTE (Donde va el recaptcha) */
+        .tarjeta-blanca {
+            background-color: white;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra suave */
+            text-align: center;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Input estilizado para que no desentone */
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        /* Botón Validar */
+        button {
+            background-color: #0072bc;
             color: white;
             border: none;
-            border-radius: 5px;
+            padding: 12px 20px;
+            border-radius: 4px;
             font-size: 16px;
-            font-weight: bold;
             cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+            font-weight: bold;
         }
-              /* --- ADAPTACIÓN RESPONSIVE (MEDIA QUERIES) --- */
-@media (max-width: 850px) {
-        body, .wrapper {
-        min-width: 0 !important;
-        width: 100% !important;
-        padding: 0 !important;
-    }
 
-    /* Sobrescribir los anchos fijos heredados de Mineduc */
-    #page, #top, .header, .title, .wrapped {
-        width: 100% !important;
-        min-width: 100% !important;
-        box-sizing: border-box; 
-    }
-    .logo, .title {
-        text-align: left;
-        padding: 10px;
-    }
-    .header h1 {
-        font-size: 1.2em; 
-        line-height: 1.2;
-    } /* <--- ¡ESTA LLAVE CIERRA EL H1! */
+        button:hover {
+            background-color: #005a9c;
+        }
 
-    /* AJUSTE CLAVE: Eliminar márgenes y padding en elementos que empujan el contenido */
-    #navegacion, #breadcrumb, .content {
-        padding-left: 10px !important; 
-        padding-right: 10px !important; 
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-    
-    /* Asegurar que el título 'Validación de Certificado' no tenga margen negativo */
-    h2 {
-        margin-left: 10px !important; 
-        padding-left: 0 !important;
-    } /* <--- ¡ESTA LLAVE CIERRA EL H2! */
+        /* Footer */
+        .footer-info {
+            margin-top: auto; /* Empuja el footer al final */
+            padding: 20px;
+            font-size: 12px;
+            color: #777;
+            line-height: 1.5;
+        }
 
-    /* Redefine el contenedor principal */
-    .container_mid {
-        width: 90% !important; 
-        padding: 0 10px; 
-    }
+        .footer-info a {
+            color: #0072bc;
+            text-decoration: none;
+        }
 
-    /* Ajusta el contenido del captcha y mensajes */
-    .captcha-wrapper {
-        margin-top: 10px;
-    }
-    .captcha-box {
-        padding: 15px;
-    }
+        /* Mensajes de error y éxito */
+        .error {
+            color: #d9534f;
+            background-color: #f2dede;
+            border: 1px solid #ebccd1;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+        }
 
-    /* AJUSTE CLAVE: Reducir ancho de campos y botón */
-    .captcha-box input[type="text"], 
-    .captcha-box button {
-        width: 90% !important; /* Reduce el ancho al 90% */
-        margin-left: auto !important; /* Centra el elemento */
-        margin-right: auto !important; /* Centra el elemento */
-        display: block !important;
-    }
-    
-    /* Centrar también la caja de reCAPTCHA */
-    .g-recaptcha { 
-        margin: 10px auto !important;
-    }
+        #resultado-vista {
+            display: none;
+            padding: 20px;
+        }
 
-    /* Ajusta el ancho y margen de los elementos Mineduc si no responden */
-    .content, .tab_content, .wrapper {
-        padding: 0 !important;
-        margin: 0 auto;
-        width: 100% !important;
-    }
+        /* Visor PDF */
+        #pdf-visor {
+            background: #333;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        
+        #pdf-link {
+            display: inline-block;
+            margin-top: 10px;
+            background: #17a2b8;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
 
-    /* Hace el botón de Volver al Portal más pequeño */
-    .volver-portal-btn {
-        width: 90%;
-    }
-} /* CIERRA EL BLOQUE @media */
-  
+        /* Ajuste para pantallas pequeñas */
+        @media (max-width: 380px) {
+            .g-recaptcha {
+                transform: scale(0.85);
+                transform-origin: 0 0;
+            }
+        }
     </style>
+    
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div id="page">
-            <a name="top"></a>
-            <div id="top">
-                <div class="wrapped">
-                    <h1 class="logo med"><a href="#">Portal de Certificados en Línea</a></h1>
-                </div>
-            </div>
-            <div class="header med">
-                <div class="title med">
-                    <h1><strong><span class="blueLight">Ayuda</span><span class="redBold">mineduc</span>&nbsp;-&nbsp;<span class="blueLight">Portal de Certificados en Línea</span></strong></h1>
-                </div>
-            </div>
-            <div id="navegacion">
-                <div id="breadcrumb" class="cf">
-                    Ud. está en: » <a href="#">Portal de Certificados en Línea&nbsp;</a>»&nbsp;<a href="#" onclick="mostrarVista('formulario-vista')">Inicio </a> »<a href="#">&nbsp;Validar Certificado</a>
-                </div>
-            </div>
-            
-            <div class="tab_content rounded-top rounded-bottom">
-                <div id="content" class="cf">
-                    <div class="content">
-                        <br>
-                        <h2 style="margin-left: 48px;"><span class="blueNormal">Validación de Certificado</span></h2>
-                        
-                        <div id="formulario-vista">
-                            <div class="msg informa rounded-top rounded-bottom gob size_15 line_21">
-                                <p><strong>Estimado Usuario: </strong>Ingrese el folio o código del certificado para validar su autenticidad.</p>
-                            </div>
-                            
-                            <div class="container_mid cf captcha-wrapper">
-                                <div class="captcha-box">
-                                    <label for="codigoInput">Folio del Certificado:</label>
-<input type="text" id="codigoInput" placeholder="Ingrese el código aquí">
-                                    
-<div class="g-recaptcha" data-sitekey="6LfD0QIsAAAAAETzSL_GyI4nvJ_YIj5hBpjQ_wFh"></div>
-<br/>
 
-<button type="button" onclick="verificarCodigo()">Validar Certificado</button>
-
-                                    <div id="resultado-error" style="display: none;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="resultado-vista">
-                            <div class="container_mid">
-                                <div class="msg-exito">
-                                    <p>El Ministerio de Educación confirma que el certificado en consulta es un documento **válido y vigente**.</p>
-                                    <p>Ver más información</p>
-                                </div>
-                            </div>
-
-                            <div class="container_mid">
-                                <p style="margin-bottom: 5px; font-weight: bold;">Verifique que el certificado presentado contenga la misma información que el documento que se muestra a continuación.</p>
-                                
-                                <div id="pdf-visor">
-                                    <p>PDF</p>
-                                    <p>getPdf</p>
-                                    <a id="pdf-link" href="#" target="_blank">Abrir</a>
-                                </div>
-
-                                <a href="#" class="volver-portal-btn" onclick="mostrarVista('formulario-vista')">
-                                    <i class="icon-home icon-white"></i> Volver al Portal
-                                </a>
-                            </div>
-
-                        </div>
-                        </div>
-                </div>
-            </div>
+    <div class="header-mobile">
+        <div class="logo-text">
+            <span class="azul-claro">Ayuda</span><span class="rojo-bold">Mineduc</span>
         </div>
+        <div class="titulo-principal">Certificados en tu Celular</div>
+        <div class="subtitulo">Validación de Certificado</div>
+    </div>
+
+    <div id="formulario-vista">
         
-        <div id="footer">
-            <div id="container">
-                <div id="bottommenu">
-                    <div class="block-right">
-                        <span class="footer_plain_text"> Ministerio de Educación - Teléfono +56 2 24066000 - Dirección Av. Libertador Bernardo O'Higgins 1371
-                            <br>
-                            <a class="btns" href="http://validator.w3.org/check?uri=referer">XHTML 1.0</a> | <a class="btns" href="#">CSS 3.0</a> | <a class="btns">Versión 1.37.0</a> 
-                        </span>
-                    </div>
-                </div>
+        <div class="contenedor-gris">
+            <p class="texto-instruccion">
+                <strong>Estimado Usuario(a):</strong> Ingrese el folio y complete el desafío Recaptcha para continuar hacia la validación del certificado.
+            </p>
+
+            <input type="text" id="codigoInput" placeholder="Ingrese Folio (Ej: NS1234)">
+
+            <div class="tarjeta-blanca">
+                <div class="g-recaptcha" data-sitekey="6LfD0QIsAAAAAETzSL_GyI4nvJ_YIj5hBpjQ_wFh"></div>
             </div>
+
+            <button type="button" onclick="verificarCodigo()">Validar Certificado</button>
+            
+            <div id="resultado-error" class="error"></div>
         </div>
+
+    </div>
+
+    <div id="resultado-vista">
+        <div class="header-mobile" style="padding-left:0; padding-right:0;">
+            <h2 style="color: #0f5132;">¡Certificado Válido!</h2>
+            <p style="margin-top:10px;">El Ministerio de Educación confirma que el documento es válido.</p>
+        </div>
+
+        <div id="pdf-visor">
+            <p>Visualización del Documento</p>
+            <a id="pdf-link" href="#" target="_blank">Abrir PDF Original</a>
+        </div>
+
+        <button onclick="mostrarVista('formulario-vista')" style="background-color: #6c757d; margin-top: 20px;">Volver</button>
+    </div>
+
+    <div class="footer-info">
+        Ministerio de Educación<br>
+        <a href="#">Gobierno de Chile</a><br>
+        Dirección: Av. Libertador Bernardo O'Higgins 1371.<br>
+        Teléfono: +56 2 24066000<br>
+        Versión 1.37.0
     </div>
 
     <script>
-    
-        // --- INICIO DE TU BASE DE DATOS ACTUALIZADA ---
-        // **IMPORTANTE**: Necesitas agregar la URL del PDF real.
+        // --- TU BASE DE DATOS ---
         const misCertificados = [
-    {
-        folio: "NS1234",
-        nombre: "Juan Alberto Pérez González",
-        curso: "Curso de HTML Básico",
-        fecha: "2024-01-15",
-        pdf_url: "https://ejemplo.com/pdfs/certificado-juan.pdf" 
-    },
-    {
-        folio: "CERT-999",
-        nombre: "María Isabel López Silva",
-        curso: "Curso de JavaScript Avanzado",
-        fecha: "2024-02-20",
-        pdf_url: "https://ejemplo.com/pdfs/certificado-maria.pdf" 
-    },
-    {
-        folio: "ABC-789",
-        nombre: "Pedro Morales Araya",
-        curso: "Gestión de Proyectos",
-        fecha: "2024-03-10",
-        pdf_url: "https://ejemplo.com/pdfs/certificado-pedro.pdf"
-    },
-    
-    // ESTA ES LA NUEVA ENTRADA DE DANIELA ROZAS
-    {
-        folio: "d12b701b-33e1-4738-8ede-8787d39f1560",
-        nombre: "DANIELA KATHERINE ROZAS GONZÁLEZ",
-        curso: "LICENCIA DE EDUCACIÓN MEDIA HUMANÍSTICO CIENTÍFICA",
-        fecha: "2025-11-04",
-        // URL DIRECTA DE TU REPOSITORIO DE GITHUB
-        pdf_url: "https://udlaverificacion.github.io/Validaciondecertificados/danielarozasgonzalez.pdf" 
-    }
-];
+            { folio: "NS1234", pdf_url: "https://ejemplo.com/juan.pdf" },
+            { folio: "d12b701b-33e1-4738-8ede-8787d39f1560", pdf_url: "https://udlaverificacion.github.io/Validaciondecertificados/danielarozasgonzalez.pdf" }
+        ];
 
-        // --- FIN DE TU BASE DE DATOS ---
-
-        // Función para cambiar entre la vista de formulario y la de resultado
         function mostrarVista(vistaId) {
             document.getElementById('formulario-vista').style.display = 'none';
             document.getElementById('resultado-vista').style.display = 'none';
             document.getElementById(vistaId).style.display = 'block';
-            document.getElementById('resultado-error').style.display = 'none'; // Limpia errores al cambiar
+            document.getElementById('resultado-error').style.display = 'none';
         }
 
-        // Función principal de validación
         function verificarCodigo() {
-            let inputUsuario = document.getElementById("codigoInput").value;
+            let inputUsuario = document.getElementById("codigoInput").value.trim().toUpperCase();
             let mensajeErrorDiv = document.getElementById("resultado-error");
-
-            // Limpiamos espacios y convertimos a mayúsculas para comparar
-            let folioBuscado = inputUsuario.trim().toUpperCase();
             
-            mensajeErrorDiv.style.display = 'none'; // Oculta errores anteriores
+            mensajeErrorDiv.style.display = 'none';
 
-            // 1. Revisar si el campo está vacío
-            if (folioBuscado === "") {
-                mensajeErrorDiv.innerHTML = "<strong>Código no válido.</strong><br/>Por favor, ingrese un folio.";
-                mensajeErrorDiv.className = "error";
-                mensajeErrorDiv.style.display = 'block';
-                return; // Detiene la función
+            // 1. Validar Input vacío
+            if (inputUsuario === "") {
+                mostrarError("Por favor, ingrese un folio.");
+                return;
             }
-            // 2. VERIFICACIÓN RECAPTCHA
+
+            // 2. Validar Recaptcha
+            // NOTA: Si estás probando en local sin servidor, esto puede dar error.
+            // Si te da problemas al probar, comenta las siguientes 4 líneas:
             let recaptchaResponse = grecaptcha.getResponse();
-
             if (recaptchaResponse.length === 0) {
-                mensajeErrorDiv.innerHTML = "<strong>Error de verificación.</strong><br/>Por favor, complete la casilla 'No soy un robot'.";
-                mensajeErrorDiv.className = "error";
-                mensajeErrorDiv.style.display = 'block';
-                return; // Detiene la función si el reCAPTCHA está vacío
+               mostrarError("Por favor, complete el 'No soy un robot'.");
+               return;
             }
-            // FIN DE LA VERIFICACIÓN RECAPTCHA
 
-            // 2. Buscar el folio
-            let certificadoEncontrado = misCertificados.find(
-                (certificado) => certificado.folio.toUpperCase() === folioBuscado
-            );
+            // 3. Buscar Folio
+            let certificado = misCertificados.find(c => c.folio.toUpperCase() === inputUsuario);
 
-            // 3. Mostrar el resultado
-            if (certificadoEncontrado) {
-                // Éxito: Configuramos el enlace y cambiamos a la vista de resultado
-                document.getElementById("pdf-link").href = certificadoEncontrado.pdf_url;
-                
-                // Si quieres que el botón Volver al Portal te lleve a otro lado,
-                // cambia la URL en el atributo href del botón 'volver-portal-btn'
-                
+            if (certificado) {
+                document.getElementById("pdf-link").href = certificado.pdf_url;
                 mostrarVista('resultado-vista');
             } else {
-                // Error: Mostramos el mensaje de error
-                mensajeErrorDiv.innerHTML = "<strong>Código no válido.</strong><br/>El código ingresado no se encontró o no es correcto.";
-                mensajeErrorDiv.className = "error";
-                mensajeErrorDiv.style.display = 'block';
+                mostrarError("El código ingresado no se encontró o no es correcto.");
             }
         }
 
-        // Inicializar la vista al cargar
+        function mostrarError(msg) {
+            let div = document.getElementById("resultado-error");
+            div.innerHTML = msg;
+            div.style.display = 'block';
+        }
+
+        // Iniciar
         document.addEventListener('DOMContentLoaded', () => {
              mostrarVista('formulario-vista');
         });
     </script>
+
 </body>
 </html>
+
+                    
+                            
+                
+
 
 
 
